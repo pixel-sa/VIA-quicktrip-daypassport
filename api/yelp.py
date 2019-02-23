@@ -25,7 +25,8 @@ def makeYelpRequest(data):
         "term" : data['subType'],
         # "latitude": data['startingLat'],
         # "longitude": data ['startingLng']
-        "location": data['startingLoc']
+        "location": data['startingLoc'],
+        'offset': int(data['offset'])
     }
     print(PARAMETERS)
 
