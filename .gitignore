@@ -1,0 +1,7 @@
+client/node_modules
+__pycache__/
+.DS_Store
+/client/build
+.vscode
+.env
+/client/src/config.js
