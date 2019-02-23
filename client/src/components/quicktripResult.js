@@ -16,6 +16,17 @@ class QuicktripResult extends Component {
     state = {
         showDetails: false
     };
+
+    createGmapsUrl = directions => {
+        console.log("create gmaps url")
+        const urlSteps = directions.legs[0]
+        const startAddress = urlSteps['start_address']
+        const endAddress = urlSteps['end_address']
+        const gmapsUrl = "https://www.google.com/maps/dir/?api=1&origin=" + startAddress + "&destination=" + endAddress + "&travelmode=transit&dir_action=navigate"
+        return encodeURI(gmapsUrl)
+
+    }
+    
     render() {
         const { yelp } = this.props.result;
         const directions = this.props.result.directions.length > 0 ? this.props.result.directions[0] : '';
@@ -55,9 +66,10 @@ class QuicktripResult extends Component {
                     </button>
 
                     {this.state.showDetails ? (
-                        <a className="btn" href="https://www.google.com" target="_blank" rel="noopener noreferrer">
+                        <a className="btn" href={this.createGmapsUrl(directions)} target="_blank" rel="noopener noreferrer">
                             Open in G Maps
                         </a>
+                       
                     ) : null}
                 </div>
 
