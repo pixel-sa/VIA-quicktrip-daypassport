@@ -28,7 +28,6 @@ class QuicktripResult extends Component {
     }
     
     render() {
-        console.log(this.props.result);
         const { yelp } = this.props.result;
         const directions = this.props.result.directions.length > 0 ? this.props.result.directions[0] : '';
         return (
@@ -51,7 +50,9 @@ class QuicktripResult extends Component {
                         <div className="qt-details-group">
                             <div className="address">{yelp.location.display_address[0]}</div>
                             <div className="phone">{yelp.display_phone}</div>
-                            <a href={yelp.url}>View on Yelp</a>
+                            <a href={yelp.url} target="_blank" rel="noopener noreferrer">
+                                View on Yelp
+                            </a>
                         </div>
                     ) : null}
                 </div>
@@ -63,7 +64,7 @@ class QuicktripResult extends Component {
                         }}>
                         {this.state.showDetails ? 'Hide Details' : 'Show Details'}
                     </button>
-                    
+
                     {this.state.showDetails ? (
                         <a className="btn" href={this.createGmapsUrl(directions)} target="_blank" rel="noopener noreferrer">
                             Open in G Maps
