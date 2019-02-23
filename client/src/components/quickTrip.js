@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Script from 'react-load-script';
 import { googleApiKey, openWeatherApiKey } from '../config';
 import QuicktripResult from './quicktripResult';
-
+import LoadingAnimation from './loading';
 
 const subTypes = {
     food: ['Suprise Me', 'American', 'Burgers', 'Chinese', 'Mexican', 'Pizza', 'Sandwiches', 'Sushi'],
@@ -73,7 +73,7 @@ class QuickTrip extends Component {
                 startingLng: addressObject.geometry.location.lng()
             });
         }
-        this.getWeather(this.state.startingLat, this.state.startingLng)
+        this.getWeather(this.state.startingLat, this.state.startingLng);
     };
 
     handleScriptLoad = () => {
@@ -96,32 +96,32 @@ class QuickTrip extends Component {
         });
     };
 
-
     getWeather = (lat, lng) => {
-        const openWeatherUrl = "http://api.openweathermap.org/data/2.5/weather?lat="+ lat + "&lon=" + lng + "&units=imperial&APPID=" + openWeatherApiKey
+        const openWeatherUrl =
+            'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lng + '&units=imperial&APPID=' + openWeatherApiKey;
         fetch(openWeatherUrl)
-        .then(response => response.json())
-        .then(result => {
-            console.log(result)
-            this.setState({"currentTemp": result.main.temp, "weatherDescription": result.weather.length > 0 ? result.weather[0]['main']: ""})
-        })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                this.setState({
+                    currentTemp: result.main.temp,
+                    weatherDescription: result.weather.length > 0 ? result.weather[0]['main'] : ''
+                });
+            });
+    };
 
-
-    }
-
-    callYelp = () =>{
-        console.log(this.state)
+    callYelp = () => {
+        console.log(this.state);
         let yelpBody = JSON.stringify({
-            "price": this.state.priceRange,
-            "startingLat": this.state.startingLat,
-            "startingLng" : this.state.startingLng,
-            "subType": this.state.subType,
-            "tripType" : this.state.tripType,
-            "startingLoc" : this.state.startingLoc,
-            "currentTemp": this.state.currentTemp,
-            "weatherDescription": this.state.weatherDescription
-        })
-
+            price: this.state.priceRange,
+            startingLat: this.state.startingLat,
+            startingLng: this.state.startingLng,
+            subType: this.state.subType,
+            tripType: this.state.tripType,
+            startingLoc: this.state.startingLoc,
+            currentTemp: this.state.currentTemp,
+            weatherDescription: this.state.weatherDescription
+        });
 
         fetch('api/yelp', {
             headers: {
@@ -230,7 +230,7 @@ class QuickTrip extends Component {
                         {this.state.resultData.length > 0 ? (
                             this.state.resultData.map(result => <QuicktripResult result={result} key={result.yelp.id} />)
                         ) : (
-                            <h5>Loading...</h5>
+                            <LoadingAnimation />
                         )}
                     </React.Fragment>
                 ) : null}

@@ -88,3 +88,21 @@
         }
     }
 }
+
+.loading-container {
+    width: 100%;
+    position: relative;
+
+    .loader {
+        background-color: $via-red;
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        left: 0%;
+        transition: 2s left linear;
+    }
+
+    .loader.go {
+        left: 100%;
+    }
+}

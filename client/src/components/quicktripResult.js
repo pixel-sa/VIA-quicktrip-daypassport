@@ -17,7 +17,6 @@ class QuicktripResult extends Component {
         showDetails: false
     };
     render() {
-        console.log(this.props.result);
         const { yelp } = this.props.result;
         const directions = this.props.result.directions.length > 0 ? this.props.result.directions[0] : '';
         return (
