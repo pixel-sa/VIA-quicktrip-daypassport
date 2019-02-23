@@ -1,0 +1,25 @@
+.app-group {
+    width: 80%;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.btn-group {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+}
+
+.btn {
+    border: 1px solid #303030;
+    padding: 18px;
+    margin: 10px;
+    width: 120px;
+    text-align: center;
+}
+
+.btn.selected {
+    border-color: #cf2020;
+    color: #cf2020;
+    margin: 10px auto;
+}

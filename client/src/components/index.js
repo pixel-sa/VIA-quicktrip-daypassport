@@ -1,25 +1,39 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import QuickTrip from './quickTrip';
 
 class Index extends Component {
     state = {
-        apiData: ""
+        tripType: ''
     };
 
-    testApi = () => {
-        fetch('/api/test')
-            .then(response => response.json())
-            .then(result => {
-                console.log(result)
-                this.setState({ apiData: result.test });
-            })
-    }
+    handleTripTypeSelection = type => {
+        this.setState({ tripType: type });
+    };
+
+    renderTripPlannerByType = () => {
+        if (this.state.tripType === 'quick') {
+            return <QuickTrip />;
+        } else if (this.state.tripType === 'day') {
+            console.log('day timin.. ');
+        }
+    };
 
     render() {
         return (
-            <div className="exampleClass">
-                <h1>Hello World</h1>
-                <button onClick={this.testApi}>Test API</button>
-                <h4>{this.state.apiData}</h4>
+            <div>
+                {!this.state.tripType ? (
+                    <div className="btn-group">
+                        <div className="btn" onClick={() => this.handleTripTypeSelection('quick')}>
+                            Quick Trip
+                        </div>
+                        <div className="btn" onClick={() => this.handleTripTypeSelection('day')}>
+                            Day Trip
+                        </div>
+                    </div>
+                ) : (
+                    <div className="btn selected">{this.state.tripType === 'quick' ? 'Quick Trip' : 'Day Trip'}</div>
+                )}
+                {this.state.tripType ? this.renderTripPlannerByType() : null}
             </div>
         );
     }

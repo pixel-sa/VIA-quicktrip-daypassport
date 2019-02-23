@@ -15,7 +15,7 @@ class Navbar extends Component {
                         <NavLink to="/account" activeClassName="active">
                             Account
                         </NavLink>
-                        <a href="#" onClick={this.context.logout}>
+                        <a onClick={this.context.logout}>
                             Logout
                         </a>
                     </React.Fragment>
