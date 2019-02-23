@@ -23,3 +23,33 @@
     color: #cf2020;
     margin: 10px auto;
 }
+
+.selected-group {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+
+    .btn.selected {
+        width: auto;
+        margin: 10px;
+        padding: 8px;
+    }
+}
+
+.qt-result-group {
+    margin: 60px auto;
+    display: flex;
+    flex-flow: column nowrap;
+
+    img {
+        width: 60px;
+    }
+
+    .step-group {
+        border: 1px solid #808080;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-evenly;
+        margin: 15px auto;
+    }
+}
