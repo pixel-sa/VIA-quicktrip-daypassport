@@ -25,6 +25,7 @@ class QuickTrip extends Component {
     };
 
     startingRef = React.createRef();
+    sortingRef = React.createRef();
 
     tripTypeDisplay = {
         food: 'Get Food',
@@ -63,6 +64,45 @@ class QuickTrip extends Component {
     //       }
     // }
 
+    handleSortChange = () => {
+        const type = this.sortingRef.current.value;
+        let sortedData = [];
+        if (type === 'distance') {
+            sortedData = this.state.resultData.sort((a, b) => {
+                if (a.directions[0].legs[0].distance.value > b.directions[0].legs[0].distance.value) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
+        } else if (type === 'rating') {
+            sortedData = this.state.resultData.sort((a, b) => {
+                if (a.yelp.rating < b.yelp.rating) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
+        } else if (type === 'duration') {
+            sortedData = this.state.resultData.sort((a, b) => {
+                if (a.directions[0].legs[0].duration.value > b.directions[0].legs[0].duration.value) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
+        } else if (type === 'review_count') {
+            sortedData = this.state.resultData.sort((a, b) => {
+                if (a.yelp.review_count < b.yelp.review_count) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
+        }
+        this.setState({ resultData: sortedData });
+    };
+
     handleSelection = () => {
         let addressObject = this.autocomplete.getPlace();
         if (addressObject) {
@@ -92,8 +132,8 @@ class QuickTrip extends Component {
 
     selectSubType = subType => {
         this.setState({ subType: subType }, () => {
-            this.callYelp('3');
-            this.callYelp('8');
+            this.callYelp('3', '0');
+            this.callYelp('7', '3');
         });
     };
 
@@ -111,18 +151,19 @@ class QuickTrip extends Component {
             });
     };
 
-    callYelp = limit => {
+    callYelp = (limit, offset) => {
         console.log(this.state);
         let yelpBody = JSON.stringify({
             price: this.state.priceRange,
             startingLat: this.state.startingLat,
             startingLng: this.state.startingLng,
-            subType: this.state.subType,
+            subType: this.state.subType === 'Suprise Me' ? '' : this.state.subType,
             tripType: this.state.tripType,
             startingLoc: this.state.startingLoc,
             currentTemp: this.state.currentTemp,
             weatherDescription: this.state.weatherDescription,
-            limit: limit
+            limit: limit,
+            offset: offset
         });
 
         fetch('api/yelp', {
@@ -136,8 +177,9 @@ class QuickTrip extends Component {
             .then(response => response.json())
             .then(result => {
                 console.log(result);
+                const resultData = [...this.state.resultData, ...result.yelp];
                 this.setState({
-                    resultData: result.yelp
+                    resultData: resultData
                 });
             })
             .catch(err => console.log('oops', err));
@@ -228,6 +270,21 @@ class QuickTrip extends Component {
                             <div className="btn selected">{this.state.subType}</div>
                         </div>
                         <h3>Results</h3>
+                        {/* <input type="radio" name="sort" value="distance" onChange={() => this.handleSortChange('distance')} /> Distance */}
+                        {/* <input type="radio" name="sort" value="rating" onChange={() => this.handleSortChange('rating')} /> Rating */}
+
+                        {this.state.resultData.length > 0 ? (
+                            <React.Fragment>
+                                <label htmlFor="sort">Sort By: </label>
+                                <select name="sort" id="sort" ref={this.sortingRef} onChange={() => this.handleSortChange()}>
+                                    <option value="">--Select A Sort--</option>
+                                    <option value="distance">Distance</option>
+                                    <option value="duration">Duration</option>
+                                    <option value="rating">Rating</option>
+                                    <option value="review_count">Review Count</option>
+                                </select>
+                            </React.Fragment>
+                        ) : null}
 
                         {this.state.resultData.length > 0 ? (
                             this.state.resultData.map(result => <QuicktripResult result={result} key={result.yelp.id} />)
