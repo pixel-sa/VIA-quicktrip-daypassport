@@ -92,7 +92,8 @@ class QuickTrip extends Component {
 
     selectSubType = subType => {
         this.setState({ subType: subType }, () => {
-            this.callYelp();
+            this.callYelp('3');
+            this.callYelp('8');
         });
     };
 
@@ -110,7 +111,7 @@ class QuickTrip extends Component {
             });
     };
 
-    callYelp = () => {
+    callYelp = limit => {
         console.log(this.state);
         let yelpBody = JSON.stringify({
             price: this.state.priceRange,
@@ -120,7 +121,8 @@ class QuickTrip extends Component {
             tripType: this.state.tripType,
             startingLoc: this.state.startingLoc,
             currentTemp: this.state.currentTemp,
-            weatherDescription: this.state.weatherDescription
+            weatherDescription: this.state.weatherDescription,
+            limit: limit
         });
 
         fetch('api/yelp', {

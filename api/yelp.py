@@ -20,7 +20,7 @@ def makeYelpRequest(data):
     PARAMETERS = {
         # This is in meters
         "radius": 10000,
-        "limit" : 3,
+        "limit" : int(data['limit']),
         "price" : data['price'],
         "term" : data['subType'],
         # "latitude": data['startingLat'],
