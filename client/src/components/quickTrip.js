@@ -21,7 +21,10 @@ class QuickTrip extends Component {
         startingLng: '',
         currentTemp: 0,
         weatherDescription: '',
-        resultData: []
+        resultData: [],
+        roundTrip: false,
+        lunchTime: 0
+        
     };
 
     startingRef = React.createRef();
@@ -96,6 +99,13 @@ class QuickTrip extends Component {
             this.callYelp('8');
         });
     };
+    
+    handleRoundTrip = (event) => {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        this.setState({roundTrip: value, lunchTime: 0})
+    }
 
     getWeather = (lat, lng) => {
         const openWeatherUrl =
@@ -143,7 +153,13 @@ class QuickTrip extends Component {
             .catch(err => console.log('oops', err));
     };
 
+    setLunchTime = (event) => {
+        console.log(event)
+        this.setState({lunchTime: event.target.value});
+    }
+
     render() {
+        console.log(this.state)
         return (
             <div className="app-group">
                 {!this.state.startingLoc ? (
@@ -162,8 +178,45 @@ class QuickTrip extends Component {
                         />
                     </React.Fragment>
                 ) : (
-                    <h4>Starting From: {this.state.startingLoc}</h4>
+                    <React.Fragment>
+                        <h4>Starting From: {this.state.startingLoc}</h4>
+                        <label>
+                            Round Trip:
+                        <input
+                            name="roundTrip"
+                            type="checkbox"
+                            checked={this.state.roundTrip}
+                            onChange={this.handleRoundTrip} />
+                        </label>
+
+                    </React.Fragment>
+                    
                 )}
+                {this.state.roundTrip ? (
+                    <React.Fragment> 
+                        {/* <p>How Long?</p>
+                        <select class="form-control">
+                            <option value="one">15 minutes</option>
+                            <option value="two">30 minutes</option>
+                            <option value="two">45 minutes</option>
+                            <option value="two">60 minutes</option>
+                        </select> */}
+                        <form>
+                            <label>
+                            How Long:
+                            <select className="form-control"  onChange={this.setLunchTime}>
+                                <option value="" disabled defaultValue>Select Time</option>
+                                <option value="15">15 minutes</option>
+                                <option value="30">30 minutes</option>
+                                <option value="45">45 minutes</option>
+                                <option value="60">60 minutes</option>
+                            </select>
+                            </label>
+                        </form>
+
+
+                    </React.Fragment>
+                ): null}
 
                 {this.state.startingLoc && !this.state.tripType ? (
                     <React.Fragment>
