@@ -7,7 +7,7 @@ class Navbar extends Component {
     render() {
         return (
             <div className="navbar">
-                <NavLink exact to="/" activeClassName="active">
+                <NavLink exact to="/home" activeClassName="active">
                     Home
                 </NavLink>
                 {this.context.isAuthenticated ? (
@@ -15,9 +15,7 @@ class Navbar extends Component {
                         <NavLink to="/account" activeClassName="active">
                             Account
                         </NavLink>
-                        <a onClick={this.context.logout}>
-                            Logout
-                        </a>
+                        <a onClick={this.context.logout}>Logout</a>
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
