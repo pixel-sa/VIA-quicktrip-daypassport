@@ -16,6 +16,9 @@
     margin: 10px;
     width: 120px;
     text-align: center;
+    font-size: 14px;
+    text-decoration: none;
+    color: inherit;
 }
 
 .btn.selected {
@@ -38,12 +41,7 @@
 
 .qt-result-group {
     margin: 60px auto;
-    display: flex;
-    flex-flow: column nowrap;
-
-    img {
-        width: 60px;
-    }
+    width: 70%;
 
     .step-group {
         border: 1px solid #808080;
@@ -51,5 +49,42 @@
         flex-flow: row nowrap;
         justify-content: space-evenly;
         margin: 15px auto;
+    }
+
+    .btn {
+        margin: 10px auto;
+        padding: 10px;
+    }
+}
+
+.qt-location-details {
+    img {
+        width: 60px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    h3 {
+        display: inline-block;
+    }
+
+    .qt-details-group {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-evenly;
+        margin: 20px 15px;
+
+        .rating {
+            color: #e0dd04;
+
+            .small-badge {
+                color: #808080;
+                font-size: 0.8em;
+            }
+        }
+
+        .pricing {
+            color: #157741;
+        }
     }
 }
