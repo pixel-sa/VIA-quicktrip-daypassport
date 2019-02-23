@@ -8,7 +8,6 @@ from datetime import datetime
 
 YELP_API_KEY= os.getenv("YELP_API_KEY")
 GOOGLE_API_KEY= os.getenv("GOOGLE_API_KEY")
-print(GOOGLE_API_KEY)
 ENDPOINT = "https://api.yelp.com/v3/businesses/search"
 HEADERS = {'Authorization': 'bearer %s' % YELP_API_KEY}
 # PARAMETERS = {'term': 'coffee', 'limit' : 3, 'radius': 1000, 'location': 'San Antonio'}
