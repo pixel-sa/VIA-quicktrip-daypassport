@@ -20,10 +20,8 @@ class QuickTrip extends Component {
         startingLat: '',
         startingLng: '',
         currentTemp: 0,
-        weatherDescription: ''
-      
+        weatherDescription: '',
         resultData: []
-
     };
 
     startingRef = React.createRef();

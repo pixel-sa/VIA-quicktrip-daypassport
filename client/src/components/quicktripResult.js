@@ -13,28 +13,60 @@ const RouteStep = props => {
 };
 
 class QuicktripResult extends Component {
-    state = {};
+    state = {
+        showDetails: false
+    };
     render() {
         console.log(this.props.result);
         const { yelp } = this.props.result;
         const directions = this.props.result.directions.length > 0 ? this.props.result.directions[0] : '';
         return (
             <div className="qt-result-group">
-                <div className="name">{yelp.name}</div>
-                <img src={yelp.image_url} alt={yelp.name} />
-                <span className="rating">{yelp.rating}</span>
-                <span className="rating-count">{yelp.review_count}</span>
-                <span className="pricing">{yelp.price}</span>
-                <span className="phone">{yelp.display_phone}</span>
-                <a href={yelp.url}>View on Yelp</a>
-                <span className="total-distance">{directions.legs[0].distance.text}</span>
-                <span className="total-time">{directions.legs[0].duration.text}</span>
-
-                <div className="steps-container">
-                    {directions.legs[0].steps.map((step, idx) => (
-                        <RouteStep step={step} key={idx} />
-                    ))}
+                <div className="qt-location-details">
+                    <img src={yelp.image_url} alt={yelp.name} />
+                    <h3>{yelp.name}</h3>
+                    <div className="qt-details-group">
+                        <div className="rating">
+                            {yelp.rating}
+                            <span className="small-badge"> ({yelp.review_count})</span>
+                        </div>
+                        <span className="pricing">{yelp.price}</span>
+                    </div>
+                    <div className="qt-details-group">
+                        <div className="total-distance">{directions.legs[0].distance.text}</div>
+                        <div className="total-time">{directions.legs[0].duration.text}</div>
+                    </div>
+                    {this.state.showDetails ? (
+                        <div className="qt-details-group">
+                            <div className="address">{yelp.location.display_address[0]}</div>
+                            <div className="phone">{yelp.display_phone}</div>
+                            <a href={yelp.url}>View on Yelp</a>
+                        </div>
+                    ) : null}
                 </div>
+                <div className="btn-group">
+                    <button
+                        className="btn"
+                        onClick={() => {
+                            this.setState({ showDetails: !this.state.showDetails });
+                        }}>
+                        {this.state.showDetails ? 'Hide Details' : 'Show Details'}
+                    </button>
+                    
+                    {this.state.showDetails ? (
+                        <a className="btn" href="https://www.google.com" target="_blank">
+                            Open in G Maps
+                        </a>
+                    ) : null}
+                </div>
+
+                {this.state.showDetails ? (
+                    <div className="steps-container">
+                        {directions.legs[0].steps.map((step, idx) => (
+                            <RouteStep step={step} key={idx} />
+                        ))}
+                    </div>
+                ) : null}
             </div>
         );
     }
