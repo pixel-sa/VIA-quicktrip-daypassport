@@ -1,2 +1,3 @@
-// Create a config.js with the following code and your credentials entered.
-export const googleApiKey = <GOOGLE API KEY WITH PLACES API ENABLED>
+// Fill in the appropriate keys and rename this file to config.js
+
+export const googleApiKey = <YOUR_GOOGLE_API_KEY_HERE>
