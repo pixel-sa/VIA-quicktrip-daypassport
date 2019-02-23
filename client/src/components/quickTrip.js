@@ -39,27 +39,27 @@ class QuickTrip extends Component {
 
     // https://developers.google.com/maps/documentation/geocoding/intro#reverse-example
     // TODO: reverse geocoding to formatted address??
-    componentDidMount = () => {
-        if (navigator.geolocation) {
-            console.log('Geolocation is supported!');
-            navigator.geolocation.getCurrentPosition(
-                function success(position){
-                    console.log(position.coords.latitude)
-                    console.log(position.coords.longitude)
-                    this.setState({startingLat: position.coords.latitude, startingLng: position.coords.longitude})
-                },
-                function error(error){
-                    console.log("error looking up location")
-                    console.log(error)
-                }
+    // componentDidMount = () => {
+    //     if (navigator.geolocation) {
+    //         console.log('Geolocation is supported!');
+    //         navigator.geolocation.getCurrentPosition(
+    //             function success(position){
+    //                 console.log(position.coords.latitude)
+    //                 console.log(position.coords.longitude)
+    //                 this.setState({startingLat: position.coords.latitude, startingLng: position.coords.longitude})
+    //             },
+    //             function error(error){
+    //                 console.log("error looking up location")
+    //                 console.log(error)
+    //             }
 
-            );
-          }
+    //         );
+    //       }
 
-          else {
-            console.log('Geolocation is not supported for this Browser/OS.');
-          }
-    }
+    //       else {
+    //         console.log('Geolocation is not supported for this Browser/OS.');
+    //       }
+    // }
 
     handleSelection = () => {
         let addressObject = this.autocomplete.getPlace();
