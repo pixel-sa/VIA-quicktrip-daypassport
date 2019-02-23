@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Script from 'react-load-script';
 import { googleApiKey } from '../config';
+import QuicktripResult from './quicktripResult';
 
 const subTypes = {
     food: ['Suprise Me', 'American', 'Burgers', 'Chinese', 'Mexican', 'Pizza', 'Sandwiches', 'Sushi'],
@@ -16,7 +17,8 @@ class QuickTrip extends Component {
         subType: '',
         priceRange: 0,
         startingLat: '',
-        startingLng: ''
+        startingLng: '',
+        resultData: []
     };
 
     startingRef = React.createRef();
@@ -38,7 +40,11 @@ class QuickTrip extends Component {
         let addressObject = this.autocomplete.getPlace();
         if (addressObject) {
             console.log(addressObject);
-            this.setState({ startingLoc: addressObject.formatted_address, startingLat: addressObject.geometry.location.lat(), startingLng:addressObject.geometry.location.lng()});
+            this.setState({
+                startingLoc: addressObject.formatted_address,
+                startingLat: addressObject.geometry.location.lat(),
+                startingLng: addressObject.geometry.location.lng()
+            });
         }
     };
 
@@ -57,36 +63,39 @@ class QuickTrip extends Component {
     };
 
     selectSubType = subType => {
-        this.setState({ subType: subType }, ()=> {
-            this.callYelp()
-        })
-
+        this.setState({ subType: subType }, () => {
+            this.callYelp();
+        });
     };
 
-    callYelp = () =>{
-        console.log(this.state)
+    callYelp = () => {
+        console.log(this.state);
         let yelpBody = JSON.stringify({
-            "price": this.state.priceRange,
-            "startingLat": this.state.startingLat,
-            "startingLng" : this.state.startingLng,
-            "subType": this.state.subType,
-            "tripType" : this.state.tripType,
-            "startingLoc" : this.state.startingLoc
-        })
+            price: this.state.priceRange,
+            startingLat: this.state.startingLat,
+            startingLng: this.state.startingLng,
+            subType: this.state.subType,
+            tripType: this.state.tripType,
+            startingLoc: this.state.startingLoc
+        });
 
         fetch('api/yelp', {
             headers: {
-                'Accept': 'application/json',
+                Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
             method: 'POST',
             body: yelpBody
         })
-        .then(response => response.json())
-        .then(result => {
-            console.log(result);
-        });
-    }
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                this.setState({
+                    resultData: result.yelp
+                });
+            })
+            .catch(err => console.log('oops', err));
+    };
 
     render() {
         return (
@@ -129,7 +138,9 @@ class QuickTrip extends Component {
 
                 {this.state.tripType && !this.state.priceRange ? (
                     <React.Fragment>
-                        <div className="btn selected">{this.tripTypeDisplay[this.state.tripType]}</div>
+                        <div className="selected-group">
+                            <div className="btn selected">{this.tripTypeDisplay[this.state.tripType]}</div>
+                        </div>
                         <h3>Select a price group</h3>
                         <div className="btn-group">
                             <div className="btn" onClick={() => this.selectPrice(1)}>
@@ -149,8 +160,10 @@ class QuickTrip extends Component {
                 ) : null}
                 {this.state.priceRange && !this.state.subType ? (
                     <React.Fragment>
-                        <div className="btn selected">{this.tripTypeDisplay[this.state.tripType]}</div>
-                        <div className="btn selected">{this.priceRangeDisplay[this.state.priceRange]}</div>
+                        <div className="selected-group">
+                            <div className="btn selected">{this.tripTypeDisplay[this.state.tripType]}</div>
+                            <div className="btn selected">{this.priceRangeDisplay[this.state.priceRange]}</div>
+                        </div>
                         <h3>Preference type</h3>
                         <div className="btn-group">
                             {subTypes[this.state.tripType].map(type => (
@@ -163,10 +176,18 @@ class QuickTrip extends Component {
                 ) : null}
                 {this.state.subType ? (
                     <React.Fragment>
-                        <div className="btn selected">{this.tripTypeDisplay[this.state.tripType]}</div>
-                        <div className="btn selected">{this.priceRangeDisplay[this.state.priceRange]}</div>
-                        <div className="btn selected">{this.state.subType}</div>
-                        <h3>Results.. or something here.</h3>
+                        <div className="selected-group">
+                            <div className="btn selected">{this.tripTypeDisplay[this.state.tripType]}</div>
+                            <div className="btn selected">{this.priceRangeDisplay[this.state.priceRange]}</div>
+                            <div className="btn selected">{this.state.subType}</div>
+                        </div>
+                        <h3>Results</h3>
+
+                        {this.state.resultData.length > 0 ? (
+                            this.state.resultData.map(result => <QuicktripResult result={result} key={result.yelp.id} />)
+                        ) : (
+                            <h5>Loading...</h5>
+                        )}
                     </React.Fragment>
                 ) : null}
             </div>

@@ -8,7 +8,6 @@ from datetime import datetime
 
 YELP_API_KEY= os.getenv("YELP_API_KEY")
 GOOGLE_API_KEY= os.getenv("GOOGLE_API_KEY")
-print(GOOGLE_API_KEY)
 ENDPOINT = "https://api.yelp.com/v3/businesses/search"
 HEADERS = {'Authorization': 'bearer %s' % YELP_API_KEY}
 # PARAMETERS = {'term': 'coffee', 'limit' : 3, 'radius': 1000, 'location': 'San Antonio'}
@@ -21,7 +20,7 @@ def makeYelpRequest(data):
     PARAMETERS = {
         # This is in meters
         "radius": 10000,
-        "limit" : 2,
+        "limit" : 3,
         "price" : data['price'],
         "term" : data['subType'],
         # "latitude": data['startingLat'],
@@ -39,7 +38,7 @@ def makeYelpRequest(data):
     print(type(business_data))
 
     yelp_object = []
-    for business in business_data['businesses'][0:1]:
+    for business in business_data['businesses']:
         business_name = business['name']
         address = business['location']['address1']
         city = business['location']['city']
