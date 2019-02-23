@@ -20,7 +20,7 @@ def makeYelpRequest(data):
     PARAMETERS = {
         # This is in meters
         "radius": 10000,
-        "limit" : 2,
+        "limit" : 3,
         "price" : data['price'],
         "term" : data['subType'],
         # "latitude": data['startingLat'],
@@ -38,7 +38,7 @@ def makeYelpRequest(data):
     print(type(business_data))
 
     yelp_object = []
-    for business in business_data['businesses'][0:1]:
+    for business in business_data['businesses']:
         business_name = business['name']
         address = business['location']['address1']
         city = business['location']['city']
