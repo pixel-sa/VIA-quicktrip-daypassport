@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Script from 'react-load-script';
-import { googleApiKey } from '../config';
+import { googleApiKey, openWeatherApiKey } from '../config';
 
 const subTypes = {
     food: ['Suprise Me', 'American', 'Burgers', 'Chinese', 'Mexican', 'Pizza', 'Sandwiches', 'Sushi'],
@@ -16,7 +16,10 @@ class QuickTrip extends Component {
         subType: '',
         priceRange: 0,
         startingLat: '',
-        startingLng: ''
+        startingLng: '',
+        currentTemp: 0,
+        weatherDescription: ''
+
     };
 
     startingRef = React.createRef();
@@ -34,12 +37,37 @@ class QuickTrip extends Component {
         4: '$$$$'
     };
 
+    // https://developers.google.com/maps/documentation/geocoding/intro#reverse-example
+    // TODO: reverse geocoding to formatted address??
+    componentDidMount = () => {
+        if (navigator.geolocation) {
+            console.log('Geolocation is supported!');
+            navigator.geolocation.getCurrentPosition(
+                function success(position){
+                    console.log(position.coords.latitude)
+                    console.log(position.coords.longitude)
+                    this.setState({startingLat: position.coords.latitude, startingLng: position.coords.longitude})
+                },
+                function error(error){
+                    console.log("error looking up location")
+                    console.log(error)
+                }
+
+            );
+          }
+
+          else {
+            console.log('Geolocation is not supported for this Browser/OS.');
+          }
+    }
+
     handleSelection = () => {
         let addressObject = this.autocomplete.getPlace();
         if (addressObject) {
             console.log(addressObject);
             this.setState({ startingLoc: addressObject.formatted_address, startingLat: addressObject.geometry.location.lat(), startingLng:addressObject.geometry.location.lng()});
         }
+        this.getWeather(this.state.startingLat, this.state.startingLng)
     };
 
     handleScriptLoad = () => {
@@ -63,6 +91,18 @@ class QuickTrip extends Component {
 
     };
 
+    getWeather = (lat, lng) => {
+        const openWeatherUrl = "http://api.openweathermap.org/data/2.5/weather?lat="+ lat + "&lon=" + lng + "&units=imperial&APPID=" + openWeatherApiKey
+        fetch(openWeatherUrl)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+            this.setState({"currentTemp": result.main.temp, "weatherDescription": result.weather.length > 0 ? result.weather[0]['main']: ""})
+        })
+
+
+    }
+
     callYelp = () =>{
         console.log(this.state)
         let yelpBody = JSON.stringify({
@@ -71,7 +111,9 @@ class QuickTrip extends Component {
             "startingLng" : this.state.startingLng,
             "subType": this.state.subType,
             "tripType" : this.state.tripType,
-            "startingLoc" : this.state.startingLoc
+            "startingLoc" : this.state.startingLoc,
+            "currentTemp": this.state.currentTemp,
+            "weatherDescription": this.state.weatherDescription
         })
 
         fetch('api/yelp', {
