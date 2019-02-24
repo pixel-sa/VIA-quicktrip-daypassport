@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Card from './card'
 
 const RouteStep = props => {
     const { step } = props;
@@ -32,6 +33,10 @@ class QuicktripResult extends Component {
         const directions = this.props.result.directions.length > 0 ? this.props.result.directions[0] : '';
         return (
             <div className="qt-result-group">
+                <Card yelp={this.props.result} directions={this.props.result.directions[0]}></Card>
+
+
+
                 <div className="qt-location-details">
                     <img src={yelp.image_url} alt={yelp.name} />
                     <h3>{yelp.name}</h3>
