@@ -6,11 +6,14 @@ const RouteStep = props => {
     console.log(step)
     return (
         <div>
-            {/* <span className="type">{step.travel_mode}</span> */}
-   
+            {/* <span className="type">{step.travel_mode}</span> */}   
+          
             <span className="direction">{step.html_instructions}</span>
-            <span className="distance">{step.distance.text}</span>
-            <span className="time">{step.duration.text}</span>
+            <p className="text-right"><small>{step.duration.text}</small></p>
+            <hr/>
+            {/* <span className="distance">{step.distance.text}</span>
+            <hr/> */}
+            {/* <span className="time">{step.duration.text}</span> */}
         </div>
     );
 };
@@ -35,7 +38,6 @@ class bCard extends Component {
         const cardHeader = {
             backgroundColor: "#c8102e",
             color: "white",
-            width: "100rem"
         }
 
         const placeImg = {
@@ -47,7 +49,9 @@ class bCard extends Component {
         }
 
         const boxShadow = {
-            boxShadow: "0 4px 2px -2px rgba(0,0,0,0.2)"
+            boxShadow: "0 4px 2px -2px rgba(0,0,0,0.2)",
+            width: "100rem"
+
         }
 
         return (
@@ -78,15 +82,24 @@ class bCard extends Component {
                         <div className="col-sm text-left">
                                
                             <span><span style={{color: "orange"}} className="fa fa-star checked"></span> {yelp.rating} ({yelp.review_count} Reviews)</span>
-                            <span style={{color: "green", marginLeft:"20px"}} >{yelp.price} </span>
+                            <p style={{color: "green", marginLeft:"20px"}} >{yelp.price} </p>
                         
-                            <p><span className="fa fa-map-marker" style={{color: "red", margin: "0px"}} ></span> {directions.legs[0].end_address} </p>
+                            <p style={{marginBottom: "0px"}}><span className="fa fa-map-marker" style={{color: "red"}} ></span> {directions.legs[0].end_address} </p>
 
                             <p><span className="fa fa-phone" style={{color: "red"}} ></span> {yelp.display_phone} </p>
                         
                             {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
 
                             <div className>
+                                <div style={{backgroundColor:"lightGray"}}>
+                                    <span>Route Summary</span>
+                                    <span className="pull-right "style={{paddingLeft: "5px"}}>  
+                                        <a href={this.createGmapsUrl(directions)} target="_blank" rel="noopener noreferrer">
+                                        Start Trip
+                                        </a>    
+                                    </span>
+
+                                </div>
                                 {directions.legs[0].steps.map((step, idx) => (
                                     <RouteStep step={step} key={idx} />
                                 ))}
@@ -96,9 +109,7 @@ class bCard extends Component {
 
 
 
-                            {/* <a className="btn" href={this.createGmapsUrl(directions)} target="_blank" rel="noopener noreferrer">
-                            Open in G Maps
-                            </a> */}
+                          
                         </div>
 
                     </div>
