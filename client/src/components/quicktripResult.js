@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Card from './bCard'
 
 const RouteStep = props => {
     const { step } = props;
@@ -30,9 +31,17 @@ class QuicktripResult extends Component {
     render() {
         const { yelp } = this.props.result;
         const directions = this.props.result.directions.length > 0 ? this.props.result.directions[0] : '';
+
         return (
             <div className="qt-result-group">
-                <div className="qt-location-details">
+                <div className="row">
+                <Card yelp={this.props.result} directions={this.props.result.directions.length > 0 ? this.props.result.directions[0] : ''}></Card>
+
+                </div>
+
+
+
+                {/* <div className="qt-location-details">
                     <img src={yelp.image_url} alt={yelp.name} />
                     <h3>{yelp.name}</h3>
                     <div className="qt-details-group">
@@ -55,8 +64,9 @@ class QuicktripResult extends Component {
                             </a>
                         </div>
                     ) : null}
-                </div>
-                <div className="btn-group">
+                </div> */}
+
+                {/* <div className="btn-group">
                     <button
                         className="btn"
                         onClick={() => {
@@ -71,15 +81,15 @@ class QuicktripResult extends Component {
                         </a>
                        
                     ) : null}
-                </div>
+                </div> */}
 
-                {this.state.showDetails ? (
+                {/* {this.state.showDetails ? (
                     <div className="steps-container">
                         {directions.legs[0].steps.map((step, idx) => (
                             <RouteStep step={step} key={idx} />
                         ))}
                     </div>
-                ) : null}
+                ) : null} */}
             </div>
         );
     }

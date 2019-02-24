@@ -52,7 +52,7 @@ class App extends Component {
             <Router history={history}>
                 <AppContext.Provider value={this.state}>
                     <React.Fragment>
-                        <Navbar />
+                        {/* <Navbar /> */}
                         <Switch>
                             <Route exact path="/" component={Index} />
                             <PrivateRoute path="/account" component={Account} isAuthenticated={this.state.isAuthenticated} />

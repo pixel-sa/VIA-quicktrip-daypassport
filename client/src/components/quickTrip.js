@@ -201,7 +201,10 @@ class QuickTrip extends Component {
     }
 
     render() {
-        console.log(this.state)
+
+        const marginFifty = {
+            marginTop: "50px"
+        }
         return (
             <div className="app-group">
                 {!this.state.startingLoc ? (
@@ -216,20 +219,23 @@ class QuickTrip extends Component {
                             name="startingPoint"
                             id="startingPoint"
                             ref={this.startingRef}
-                            placeholder="Starting Point"
+                            placeholder="Enter starting address"
+                            className="shadow p-3 mb-5 bg-white rounded"
                         />
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        <h4>Starting From: {this.state.startingLoc}</h4>
-                        <label>
+                        
+
+                        <h4><i className="fa fa-location-arrow" aria-hidden="true" style={{paddingRight: "5px"}}></i>{this.state.startingLoc}</h4>
+                        {/* <label>
                             Round Trip:
                         <input
                             name="roundTrip"
                             type="checkbox"
                             checked={this.state.roundTrip}
                             onChange={this.handleRoundTrip} />
-                        </label>
+                        </label> */}
 
                     </React.Fragment>
                     
@@ -237,7 +243,7 @@ class QuickTrip extends Component {
                 {this.state.roundTrip ? (
                     <React.Fragment> 
                         {/* <p>How Long?</p>
-                        <select class="form-control">
+                        <select className="form-control">
                             <option value="one">15 minutes</option>
                             <option value="two">30 minutes</option>
                             <option value="two">45 minutes</option>
@@ -262,15 +268,19 @@ class QuickTrip extends Component {
 
                 {this.state.startingLoc && !this.state.tripType ? (
                     <React.Fragment>
-                        <h3>What would you like to do?</h3>
+                        <h3 style={marginFifty}>What would you like to do?</h3 >
                         <div className="btn-group">
                             <div className="btn" onClick={() => this.selectTripType('food')}>
+                                <i className="fa fa-cutlery" aria-hidden="true" style={{paddingRight: "5px"}}></i>
                                 Grab Food
                             </div>
                             <div className="btn" onClick={() => this.selectTripType('drink')}>
+                                <i className="fa fa-beer" aria-hidden="true" style={{paddingRight: "5px"}}></i>
                                 Get a Drink
                             </div>
                             <div className="btn" onClick={() => this.selectTripType('explore')}>
+                                <i className="fa fa-binoculars" aria-hidden="true" style={{paddingRight: "5px"}}></i>
+
                                 Explore Nearby
                             </div>
                         </div>
@@ -279,10 +289,10 @@ class QuickTrip extends Component {
 
                 {this.state.tripType && !this.state.priceRange ? (
                     <React.Fragment>
-                        <div className="selected-group">
+                        <div className="selected-group" style={marginFifty}>
                             <div className="btn selected">{this.tripTypeDisplay[this.state.tripType]}</div>
                         </div>
-                        <h3>Select a price group</h3>
+                        <h3 style={marginFifty}>Select a price group</h3 >
                         <div className="btn-group">
                             <div className="btn" onClick={() => this.selectPrice(1)}>
                                 $
@@ -301,11 +311,12 @@ class QuickTrip extends Component {
                 ) : null}
                 {this.state.priceRange && !this.state.subType ? (
                     <React.Fragment>
-                        <div className="selected-group">
+                        <div className="selected-group" style={marginFifty}>
                             <div className="btn selected">{this.tripTypeDisplay[this.state.tripType]}</div>
                             <div className="btn selected">{this.priceRangeDisplay[this.state.priceRange]}</div>
                         </div>
-                        <h3>Preference type</h3>
+
+                        <h3 style={marginFifty}>Preference type</h3>
                         <div className="btn-group">
                             {subTypes[this.state.tripType].map(type => (
                                 <div key={type} onClick={() => this.selectSubType(type)} className="btn">
@@ -317,7 +328,7 @@ class QuickTrip extends Component {
                 ) : null}
                 {this.state.subType ? (
                     <React.Fragment>
-                        <div className="selected-group">
+                        <div className="selected-group" style={marginFifty}>
                             <div className="btn selected">{this.tripTypeDisplay[this.state.tripType]}</div>
                             <div className="btn selected">{this.priceRangeDisplay[this.state.priceRange]}</div>
                             <div className="btn selected">{this.state.subType}</div>
