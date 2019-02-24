@@ -237,6 +237,7 @@ class QuickTrip extends Component {
 
                         <input name="roundTrip" type="checkbox" checked={this.state.roundTrip} onChange={this.handleRoundTrip} />
                         {/* </label> */}
+
                     </React.Fragment>
                 )}
                 {this.state.roundTrip ? (

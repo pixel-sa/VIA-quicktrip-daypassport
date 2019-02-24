@@ -34,8 +34,18 @@ class Index extends Component {
             backgroundColor: 'white'
         };
         const dayTripButton = {
-            backgroundColor: 'white'
-        };
+            backgroundColor: "white"
+        }
+
+        const introText = {
+            fontFamily: 'Nunito',
+            color: "white",
+            fontWeight: "500,",
+            fontSize: "50px",
+            paddingLeft: "100px",
+            paddingTop: "50px"
+        }
+
 
         return (
             <div>
@@ -50,14 +60,13 @@ class Index extends Component {
                     </div>
                 </div>
                 <div className="container-fluid" style={mainHeader}>
-                    <div className="row" style={{ paddingTop: '75px' }}>
-                        <div className="col-sm" style={{ paddingLeft: '100px' }}>
-                            <h1>
-                                ADVENTURE <br /> AWAITS
-                            </h1>
+
+                    <div className="row">
+                        <div className="col-sm" style={introText} >
+                            <p>ADVENTURE <br/> AWAITS</p>
                         </div>
 
-                        <div className="col-sm">
+                        <div className="col-sm" style={{paddingTop: "80px"}}>
                             {!this.state.tripType ? (
                                 <div className="row">
                                     <div className="col-sm">
