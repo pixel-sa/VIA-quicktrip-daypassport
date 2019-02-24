@@ -75,14 +75,6 @@ const AdventureStop = props => {
         <React.Fragment>
             {props.adventure.direction ? (
                 <React.Fragment>
-                    {props.adventure.direction.legs[0].steps.map(step => (
-                        <div className="step-group">
-                            <span className="type">{step.travel_mode}</span>
-                            <span className="direction">{step.html_instructions}</span>
-                            <span className="distance">{step.distance.text}</span>
-                            <span className="time">{step.duration.text}</span>
-                        </div>
-                    ))}
                     <a
                         href={
                             'https://www.google.com/maps/dir/?api=1&origin=' +
@@ -92,9 +84,23 @@ const AdventureStop = props => {
                             '&travelmode=transit&dir_action=navigate'
                         }
                         target="_blank"
-                        className="btn">
-                        Open in G Maps
+                        className="btn start-trip">
+                        Start Trip
                     </a>
+                    <div className="qt-result-group">
+                        <div className="depart">Departure time: {props.adventure.direction.legs[0].departure_time.text}</div>
+                        {props.adventure.direction.legs[0].steps.map(step => (
+                            <div key={step.polyline.points}>
+                                <div className="step-group">
+                                    <div className="direction">{step.html_instructions}</div>
+                                    <div className="distance">{step.distance.text}</div>
+                                    <div className="time">{step.duration.text}</div>
+                                </div>
+                                <hr />
+                            </div>
+                        ))}
+                        <div className="arrive">Arrival Time: {props.adventure.direction.legs[0].arrival_time.text}</div>
+                    </div>
                 </React.Fragment>
             ) : null}
             <div className="destination-stop">
@@ -399,7 +405,7 @@ class DayAdventure extends Component {
                         {this.state.routeStops.length > 0 ? (
                             <React.Fragment>
                                 {this.state.routeStops.map(stop => (
-                                    <AdventureStop adventure={stop} />
+                                    <AdventureStop adventure={stop} key={stop.name} />
                                 ))}
                                 {!this.state.routeComplete ? (
                                     <div className="btn complete-btn" onClick={() => this.handleCompleteRouteClick()}>
