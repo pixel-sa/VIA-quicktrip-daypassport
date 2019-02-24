@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import Register from './components/register';
 import Login from './components/login';
 import Account from './components/account';
+import Home from './components/home';
 
 class App extends Component {
     state = {
@@ -52,9 +53,10 @@ class App extends Component {
             <Router history={history}>
                 <AppContext.Provider value={this.state}>
                     <React.Fragment>
-                        <Navbar />
+                        {/* <Navbar /> */}
                         <Switch>
                             <Route exact path="/" component={Index} />
+                            <Route path='/home' component={Home} />
                             <PrivateRoute path="/account" component={Account} isAuthenticated={this.state.isAuthenticated} />
                             <Route path="/register" component={Register} />
                             <Route path="/login" render={() => <Login login={this.login} />} />
