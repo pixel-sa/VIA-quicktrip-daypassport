@@ -6,13 +6,14 @@ import os
 import googlemaps
 from datetime import datetime
 
-YELP_API_KEY= os.getenv("YELP_API_KEY")
-GOOGLE_API_KEY= os.getenv("GOOGLE_API_KEY")
+YELP_API_KEY = os.getenv("YELP_API_KEY")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 ENDPOINT = "https://api.yelp.com/v3/businesses/search"
 HEADERS = {'Authorization': 'bearer %s' % YELP_API_KEY}
 # PARAMETERS = {'term': 'coffee', 'limit' : 3, 'radius': 1000, 'location': 'San Antonio'}
 
-#TODO update parameters... to be dynamic
+# TODO update parameters... to be dynamic
+
 
 def makeYelpRequest(data):
     print("make yelp request")
@@ -20,9 +21,9 @@ def makeYelpRequest(data):
     PARAMETERS = {
         # This is in meters
         "radius": 10000,
-        "limit" : int(data['limit']),
-        "price" : data['price'],
-        "term" : data['subType'],
+        "limit": int(data['limit']),
+        "price": data['price'],
+        "term": data['subType'],
         # "latitude": data['startingLat'],
         # "longitude": data ['startingLng']
         "location": data['startingLoc'],
@@ -30,9 +31,9 @@ def makeYelpRequest(data):
     }
     print(PARAMETERS)
 
-    response = requests.get(url = ENDPOINT, params=PARAMETERS, headers=HEADERS)
+    response = requests.get(url=ENDPOINT, params=PARAMETERS, headers=HEADERS)
 
-    #TODO: CHECK RESPONSE, if 200, return, if error, return error code
+    # TODO: CHECK RESPONSE, if 200, return, if error, return error code
 
     business_data = response.json()
     print(business_data)
@@ -50,14 +51,23 @@ def makeYelpRequest(data):
 
         gmaps = googlemaps.Client(key=GOOGLE_API_KEY)
 
-    
         now = datetime.now()
         directions_result = gmaps.directions(data['startingLoc'],
-                                            full_address,
-                                            mode="transit",
-                                            departure_time=now)
+                                             full_address,
+                                             mode="transit",
+                                             departure_time=now)
 
         yelp_object.append({"yelp": business, "directions": directions_result})
 
     return yelp_object
 
+
+def route_directions(data):
+    gmaps = googlemaps.Client(key=GOOGLE_API_KEY)
+
+    directions_result = gmaps.directions(data['startLoc'],
+                                         data['destLoc'],
+                                         mode="transit",
+                                         departure_time=int(data['time']))
+
+    return directions_result
