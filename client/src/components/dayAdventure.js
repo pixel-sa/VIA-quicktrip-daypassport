@@ -72,12 +72,24 @@ const AdventureDestAdd = props => {
 const AdventureStop = props => {
     const { name, imageUrl, description, time } = props.adventure;
     return (
-        <div className="destination-stop">
-            <img src={imageUrl} alt={name} />
-            <h5>{name}</h5>
-            <p>{description}</p>
-            <p>Time allocated: {time} minutes</p>
-        </div>
+        <React.Fragment>
+            {props.adventure.direction
+                ? props.adventure.direction.legs[0].steps.map(step => (
+                      <div className="step-group">
+                          <span className="type">{step.travel_mode}</span>
+                          <span className="direction">{step.html_instructions}</span>
+                          <span className="distance">{step.distance.text}</span>
+                          <span className="time">{step.duration.text}</span>
+                      </div>
+                  ))
+                : null}
+            <div className="destination-stop">
+                <img src={imageUrl} alt={name} />
+                <h5>{name}</h5>
+                <p>{description}</p>
+                <p>Time allocated: {time} minutes</p>
+            </div>
+        </React.Fragment>
     );
 };
 
@@ -232,16 +244,19 @@ class DayAdventure extends Component {
         this.setState({ routeComplete: true });
         const adventure = this.state.routeStops;
         const data = await this.getDirections(this.state.startingLoc, adventure[0].address, this.state.date.getTime() / 1000);
-        adventure[0].direction = data[0]
-        let newTime = this.state.date.getTime() / 1000
-        newTime += data[0].legs[0].duration.value + (adventure[0].time * 60)
-        const dataNext = await this.getDirections(adventure[0].address, adventure[1].address, newTime)
-            // .then(data => {
-            //     adventure[0].direction = data
-            //     const newTime = this.state.date.getTime / 1000
-            //     // newTime += data.
-            //     this.getDirections(adventure[0].address, adventure[1].address, )
-            // })
+        adventure[0].direction = data[0];
+        this.setState({ routeStops: adventure });
+        let newTime = this.state.date.getTime() / 1000;
+        newTime += data[0].legs[0].duration.value + adventure[0].time * 60;
+        const dataNext = await this.getDirections(adventure[0].address, adventure[1].address, newTime);
+        adventure[1].direction = dataNext[0];
+        this.setState({ routeStops: adventure });
+        // .then(data => {
+        //     adventure[0].direction = data
+        //     const newTime = this.state.date.getTime / 1000
+        //     // newTime += data.
+        //     this.getDirections(adventure[0].address, adventure[1].address, )
+        // })
     };
 
     getDirections = (start, stop, time) => {
@@ -263,9 +278,9 @@ class DayAdventure extends Component {
                 .then(response => response.json())
                 .then(result => {
                     console.log(result.data);
-                    resolve(result.data)
+                    resolve(result.data);
                 })
-                .catch(err => reject(err))
+                .catch(err => reject(err));
         });
     };
 
