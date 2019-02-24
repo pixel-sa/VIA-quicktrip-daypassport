@@ -24,7 +24,7 @@
 .btn.selected {
     border-color: #adaba6;
     background-color: white;
-    color:black;
+    color: black;
     border-color: #cf2020 !important;
     color: #cf2020;
     margin: 10px auto;
@@ -44,14 +44,14 @@
 }
 
 .qt-result-group {
-    margin: 60px auto;
-    width: 70%;
+    margin: 10px auto 60px auto;
+    width: 60%;
 
     .step-group {
-        border: 1px solid #808080;
+        // border: 1px solid #808080;
         display: flex;
         flex-flow: row nowrap;
-        justify-content: space-evenly;
+        justify-content: space-between;
         margin: 15px auto;
     }
 
@@ -132,7 +132,6 @@
             padding-bottom: 15px;
             border-bottom: 1px solid #808080;
         }
-
 
         div.btn {
             background-color: $via-red;
@@ -232,4 +231,14 @@
     p {
         margin-top: 22px;
     }
+}
+
+.arrive,
+.depart {
+    background-color: $via-red;
+    color: #ffffff;
+    padding: 5px 10px;
+    font-weight: bold;
+    border-radius: 3px;
+    text-align: left;
 }

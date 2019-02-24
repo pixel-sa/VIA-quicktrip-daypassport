@@ -199,8 +199,8 @@ class QuickTrip extends Component {
 
     render() {
         const marginFifty = {
-            marginTop: "50px"
-        }
+            marginTop: '50px'
+        };
 
         return (
             <div className="app-group">
@@ -222,9 +222,10 @@ class QuickTrip extends Component {
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        
-
-                        <h4><i className="fa fa-location-arrow" aria-hidden="true" style={{paddingRight: "5px"}}></i>{this.state.startingLoc}</h4>
+                        <h4>
+                            <i className="fa fa-location-arrow" aria-hidden="true" style={{ paddingRight: '5px' }} />
+                            {this.state.startingLoc}
+                        </h4>
                         {/* <label>
                             Round Trip:
                         <input
@@ -232,9 +233,11 @@ class QuickTrip extends Component {
                             type="checkbox"
                             checked={this.state.roundTrip}
                             onChange={this.handleRoundTrip} />
-                       
-                            <input name="roundTrip" type="checkbox" checked={this.state.roundTrip} onChange={this.handleRoundTrip} />
                         </label> */}
+
+                        <input name="roundTrip" type="checkbox" checked={this.state.roundTrip} onChange={this.handleRoundTrip} />
+                        {/* </label> */}
+
                     </React.Fragment>
                 )}
                 {this.state.roundTrip ? (
@@ -265,19 +268,18 @@ class QuickTrip extends Component {
 
                 {this.state.startingLoc && !this.state.tripType ? (
                     <React.Fragment>
-                        <h3 style={marginFifty}>What would you like to do?</h3 >
+                        <h3 style={marginFifty}>What would you like to do?</h3>
                         <div className="btn-group">
                             <div className="btn" onClick={() => this.selectTripType('food')}>
-                                <i className="fa fa-cutlery" aria-hidden="true" style={{paddingRight: "5px"}}></i>
+                                <i className="fa fa-cutlery" aria-hidden="true" style={{ paddingRight: '5px' }} />
                                 Grab Food
                             </div>
                             <div className="btn" onClick={() => this.selectTripType('drink')}>
-                                <i className="fa fa-beer" aria-hidden="true" style={{paddingRight: "5px"}}></i>
+                                <i className="fa fa-beer" aria-hidden="true" style={{ paddingRight: '5px' }} />
                                 Get a Drink
                             </div>
                             <div className="btn" onClick={() => this.selectTripType('explore')}>
-                                <i className="fa fa-binoculars" aria-hidden="true" style={{paddingRight: "5px"}}></i>
-
+                                <i className="fa fa-binoculars" aria-hidden="true" style={{ paddingRight: '5px' }} />
                                 Explore Nearby
                             </div>
                         </div>
@@ -289,7 +291,7 @@ class QuickTrip extends Component {
                         <div className="selected-group" style={marginFifty}>
                             <div className="btn selected">{this.tripTypeDisplay[this.state.tripType]}</div>
                         </div>
-                        <h3 style={marginFifty}>Select a price group</h3 >
+                        <h3 style={marginFifty}>Select a price group</h3>
                         <div className="btn-group">
                             <div className="btn" onClick={() => this.selectPrice(1)}>
                                 $
