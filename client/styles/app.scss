@@ -98,12 +98,15 @@
     position: relative;
 
     .loader {
-        background-color: $via-red;
+        // background-color: $via-red;
         width: 30px;
         height: 30px;
         position: absolute;
         left: 0%;
         transition: 3s left linear;
+        img {
+            width:200px;
+        }
     }
 
     .loader.go {

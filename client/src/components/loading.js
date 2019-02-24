@@ -15,7 +15,9 @@ class LoadingAnimation extends Component {
         const loaderClasses = this.state.going ? 'loader go' : 'loader';
         return (
             <div className="loading-container">
-                <div className={loaderClasses} />
+                <div className={loaderClasses}>
+                    <img src="../images/busIcon.png" alt=""/>
+                </div>
             </div>
         );
     }

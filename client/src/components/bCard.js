@@ -82,7 +82,7 @@ class bCard extends Component {
                         <div className="col-sm text-left">
                                
                             <span><span style={{color: "orange"}} className="fa fa-star checked"></span> {yelp.rating} ({yelp.review_count} Reviews)</span>
-                            <p style={{color: "green", marginLeft:"20px"}} >{yelp.price} </p>
+                            <span style={{color: "green", marginLeft:"20px"}} >{yelp.price} </span>
                         
                             <p style={{marginBottom: "0px"}}><span className="fa fa-map-marker" style={{color: "red"}} ></span> {directions.legs[0].end_address} </p>
 
