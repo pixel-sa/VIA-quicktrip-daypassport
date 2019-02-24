@@ -20,21 +20,82 @@ class Index extends Component {
     };
 
     render() {
+        const mainHeader = {
+            // backgroundColor: "#c8102e",
+            color: "white",
+            height: "250px",
+            background: "-webkit-linear-gradient(86deg, rgb(228, 16, 41), rgb(98, 10, 10))",
+            background: "linear-gradient(86deg, rgb(228, 16, 41), rgb(98, 10, 10))",
+            marginBottom: "50px"
+
+        }
+
+        const quickTripButton = {
+            backgroundColor: "white"
+        }
+        const dayTripButton = {
+            backgroundColor: "white"
+        }
+
+
         return (
-            <div>
-                {!this.state.tripType ? (
-                    <div className="btn-group">
-                        <div className="btn" onClick={() => this.handleTripTypeSelection('quick')}>
-                            Quick Trip
-                        </div>
-                        <div className="btn" onClick={() => this.handleTripTypeSelection('day')}>
-                            Day Trip
+            <div >
+                <div className="row" style= {{padding: "20px"}}>
+                    <div className="col-sm">
+                        <div>
+                            <img src="../images/Main-Logo.png" alt="" style={{width:"50px"}}/>
+                            Adventures
                         </div>
                     </div>
-                ) : (
-                    <div className="btn selected">{this.state.tripType === 'quick' ? 'Quick Trip' : 'Day Trip'}</div>
-                )}
-                {this.state.tripType ? this.renderTripPlannerByType() : null}
+                </div>
+                <div className="container-fluid" style={mainHeader}>
+                    <div className="row" style={{paddingTop: "75px"}}>
+                        <div className="col-sm" style={{paddingLeft: "100px"}} >
+                            <h1>ADVENTURE <br/> AWAITS</h1>
+                        </div>
+
+                        <div className="col-sm">
+                            {!this.state.tripType ? (
+
+                                <div className="row">
+                                    <div className="col-sm">
+                                        <div className="btn" onClick={() => this.handleTripTypeSelection('quick')} style={quickTripButton}>
+                                            <i className="fa fa-bus" style={{paddingRight: "5px"}}></i>
+                                            Quick Trip
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-sm">
+                                        <div className="btn" onClick={() => this.handleTripTypeSelection('day')} style={dayTripButton}>
+                                            <i className="fa fa-compass" style={{paddingRight: "5px"}}></i>
+                                            Day Trip
+                                        </div>
+                                    </div>
+
+                                </div>
+                              
+
+                              
+                                  
+                            ) : (
+                                <div className="btn selected">{this.state.tripType === 'quick' ? 'Quick Trip' : 'Day Trip'}</div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+                        
+                <div className="row">
+                 
+
+                </div>
+           
+                <div className="row">
+                    {this.state.tripType ? this.renderTripPlannerByType() : null}
+                </div>
+                    
+
+          
             </div>
         );
     }
