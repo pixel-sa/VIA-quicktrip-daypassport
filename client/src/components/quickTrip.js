@@ -108,7 +108,6 @@ class QuickTrip extends Component {
     handleSelection = () => {
         let addressObject = this.autocomplete.getPlace();
         if (addressObject) {
-            console.log(addressObject);
             this.setState({
                 startingLoc: addressObject.formatted_address,
                 startingLat: addressObject.geometry.location.lat(),
