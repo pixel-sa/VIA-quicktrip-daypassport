@@ -39,3 +39,12 @@ def yelpRequest():
     print(data)
     result = yelp.makeYelpRequest(data)
     return jsonify({'yelp': result}), 200
+
+
+@app.route('/api/directions', methods=['POST'])
+def directions():
+    print('something.is happening...')
+    data = request.json
+    print(data)
+    result = yelp.route_directions(data)
+    return jsonify({'data': result}), 200

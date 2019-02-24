@@ -24,7 +24,6 @@ class QuickTrip extends Component {
         resultData: [],
         roundTrip: false,
         lunchTime: 0
-        
     };
 
     startingRef = React.createRef();
@@ -109,7 +108,6 @@ class QuickTrip extends Component {
     handleSelection = () => {
         let addressObject = this.autocomplete.getPlace();
         if (addressObject) {
-            console.log(addressObject);
             this.setState({
                 startingLoc: addressObject.formatted_address,
                 startingLat: addressObject.geometry.location.lat(),
@@ -139,13 +137,13 @@ class QuickTrip extends Component {
             this.callYelp('7', '3');
         });
     };
-    
-    handleRoundTrip = (event) => {
+
+    handleRoundTrip = event => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        this.setState({roundTrip: value, lunchTime: 0})
-    }
+        this.setState({ roundTrip: value, lunchTime: 0 });
+    };
 
     getWeather = (lat, lng) => {
         const openWeatherUrl =
@@ -162,7 +160,6 @@ class QuickTrip extends Component {
     };
 
     callYelp = (limit, offset) => {
-        console.log(this.state);
         let yelpBody = JSON.stringify({
             price: this.state.priceRange,
             startingLat: this.state.startingLat,
@@ -195,16 +192,16 @@ class QuickTrip extends Component {
             .catch(err => console.log('oops', err));
     };
 
-    setLunchTime = (event) => {
-        console.log(event)
-        this.setState({lunchTime: event.target.value});
-    }
+    setLunchTime = event => {
+        console.log(event);
+        this.setState({ lunchTime: event.target.value });
+    };
 
     render() {
-
         const marginFifty = {
             marginTop: "50px"
         }
+
         return (
             <div className="app-group">
                 {!this.state.startingLoc ? (
@@ -237,11 +234,12 @@ class QuickTrip extends Component {
                             onChange={this.handleRoundTrip} />
                         </label> */}
 
+                            <input name="roundTrip" type="checkbox" checked={this.state.roundTrip} onChange={this.handleRoundTrip} />
+                        </label>
                     </React.Fragment>
-                    
                 )}
                 {this.state.roundTrip ? (
-                    <React.Fragment> 
+                    <React.Fragment>
                         {/* <p>How Long?</p>
                         <select className="form-control">
                             <option value="one">15 minutes</option>
@@ -251,20 +249,20 @@ class QuickTrip extends Component {
                         </select> */}
                         <form>
                             <label>
-                            How Long:
-                            <select className="form-control"  onChange={this.setLunchTime}>
-                                <option value="" disabled defaultValue>Select Time</option>
-                                <option value="15">15 minutes</option>
-                                <option value="30">30 minutes</option>
-                                <option value="45">45 minutes</option>
-                                <option value="60">60 minutes</option>
-                            </select>
+                                How Long:
+                                <select className="form-control" onChange={this.setLunchTime}>
+                                    <option value="" disabled defaultValue>
+                                        Select Time
+                                    </option>
+                                    <option value="15">15 minutes</option>
+                                    <option value="30">30 minutes</option>
+                                    <option value="45">45 minutes</option>
+                                    <option value="60">60 minutes</option>
+                                </select>
                             </label>
                         </form>
-
-
                     </React.Fragment>
-                ): null}
+                ) : null}
 
                 {this.state.startingLoc && !this.state.tripType ? (
                     <React.Fragment>

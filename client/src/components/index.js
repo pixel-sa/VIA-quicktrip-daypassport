@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import QuickTrip from './quickTrip';
+import DayAdventure from './dayAdventure';
 
 class Index extends Component {
     state = {
@@ -14,7 +15,7 @@ class Index extends Component {
         if (this.state.tripType === 'quick') {
             return <QuickTrip />;
         } else if (this.state.tripType === 'day') {
-            console.log('day timin.. ');
+            return <DayAdventure />;
         }
     };
 
